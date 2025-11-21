@@ -1,0 +1,3 @@
+cloud,subscription_or_project,resource_group_or_project,vm_name,status,owner,cleardata,environment
+azure,Visual Studio Professional Subscription,RG-JDS-LINUX-VM1,linux-vm1,VM deallocated,joe,y,
+azure,Visual Studio Professional Subscription,RG-JDS-WIN-VM1,win-vm1,VM deallocated,tom,n,
