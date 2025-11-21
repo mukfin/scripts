@@ -46,8 +46,6 @@ append_rows() {
 collect_azure() {
   local account_json subscription_lines vm_json rows count=0
 
-  require_cmd az
-
   if ! account_json=$(az account list --output json 2>/dev/null); then
     log_error "Failed to list Azure subscriptions; skipping Azure collection."
     return
@@ -86,25 +84,12 @@ collect_azure() {
 
 collect_gcp() {
   local vm_json rows count=0
-
-  require_cmd gcloud
-
   if [[ ${#gcp_projects[@]} -eq 0 ]]; then
-    if mapfile -t gcp_projects < <(gcloud projects list --format='value(projectId)' --quiet 2>/dev/null) && [[ ${#gcp_projects[@]} -gt 0 ]]; then
-      :
-    else
-      local active
-      if active=$(gcloud config list --format 'value(core.project)' 2>/dev/null) && [[ -n "$active" ]]; then
-        gcp_projects=("$active")
-      else
-        log_error "No GCP projects specified and none discovered via gcloud; skipping GCP collection."
-        return
-      fi
-    fi
+    return
   fi
 
   for project in "${gcp_projects[@]}"; do
-    if ! vm_json=$(gcloud compute instances list --project "$project" --format=json --quiet 2>/dev/null); then
+    if ! vm_json=$(gcloud compute instances list --project "$project" --format json 2>/dev/null); then
       log_error "Failed to list VMs for GCP project '$project'; skipping."
       continue
     fi
