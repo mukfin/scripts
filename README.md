@@ -17,6 +17,13 @@ Generated CSV reports are saved under `./reports/output/`:
 cd azure
 ./collect_azure_patches.sh <workspace-id>
 ```
+To run the Azure report across every Log Analytics workspace in your current subscription without manually specifying IDs:
+```
+for ws in $(az monitor log-analytics workspace list --query "[].customerId" -o tsv); do
+  ./azure/collect_azure_patches.sh "$ws"
+done
+```
+
 Environment variables:
 - `AZURE_PATCH_OUTPUT` (optional): custom output path. Default: `./reports/output/azure_needed_patches.csv`.
 - `AZURE_PATCH_TIMESPAN_DAYS` (optional): number of days to look back. Default: `7`.
