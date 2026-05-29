@@ -1,3 +1,5 @@
+This is a git test. 
+
 # Multi-cloud Patch Reporting (Read-only)
 
 Bash scripts to gather read-only patch and package information for Azure and GCP virtual machines. The scripts query existing telemetry and do **not** install updates, trigger patch jobs, or reboot VMs.
